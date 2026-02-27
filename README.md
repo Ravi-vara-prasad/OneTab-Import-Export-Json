@@ -1,6 +1,7 @@
 # OneTab-Import-Export-Json
 
 <details>
+  <summary> Import Script</summary>
 
   ```
 (function importOneTab() {
