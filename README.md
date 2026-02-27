@@ -1,8 +1,9 @@
 # OneTab-Import-Export-Json
 
+<details>
 
-
-``` (function importOneTab() {
+  ```
+(function importOneTab() {
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = 'application/json';
@@ -51,4 +52,8 @@
   };
 
   input.click();
-})();   ```
+})();
+
+
+  ```
+</details>
