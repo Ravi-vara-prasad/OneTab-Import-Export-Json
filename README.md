@@ -1,4 +1,53 @@
 # OneTab-Import-Export-Json
+<details>
+  <summary>Export Script</summary>
+
+  ```
+(async function exportOneTab() {
+  const dbName = 'onetab';
+  const request = indexedDB.open(dbName);
+
+  request.onsuccess = async (event) => {
+    const db = event.target.result;
+    const exportData = {};
+    const storeNames = Array.from(db.objectStoreNames);
+
+    console.log(`Found object stores: ${storeNames.join(', ')}. Extracting...`);
+
+    for (const storeName of storeNames) {
+      const transaction = db.transaction(storeName, 'readonly');
+      const store = transaction.objectStore(storeName);
+      const allRecords = await new Promise((resolve) => {
+        const req = store.getAll();
+        req.onsuccess = () => resolve(req.result);
+      });
+      exportData[storeName] = allRecords;
+    }
+
+    const jsonString = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'onetab-full-backup.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    console.log("✅ Backup complete! Your JSON file should be downloading now.");
+  };
+
+  request.onerror = (event) => {
+    console.error("Database error: ", event.target.error);
+  };
+})();
+
+
+  ```
+  
+</details>
 
 <details>
   <summary> Import Script</summary>
