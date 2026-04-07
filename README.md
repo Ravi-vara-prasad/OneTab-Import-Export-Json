@@ -43,8 +43,6 @@
     console.error("Database error: ", event.target.error);
   };
 })();
-
-
   ```
   
 </details>
@@ -103,15 +101,6 @@
 
   input.click();
 })();
-
-
-
-
-
-
-
-
-
 
 
 
